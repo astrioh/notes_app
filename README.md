@@ -1,1 +1,1 @@
-# pyshop_test_task
+# Notes app
