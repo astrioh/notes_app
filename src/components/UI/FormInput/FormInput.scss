@@ -1,0 +1,18 @@
+.form-input {
+  &__input {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    margin-top: 5px;
+
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    
+    color: #202020;
+  }
+}
