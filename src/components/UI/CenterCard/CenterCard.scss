@@ -1,0 +1,16 @@
+.center-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+
+  &__card {
+    width: 500px;
+    
+    padding: 50px 30px;
+
+    border: 1px solid #eee;
+    border-radius: 10px;
+  }
+}
