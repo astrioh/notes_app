@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { auth } from '../../../firebaseConfig';
+import { auth } from '../../firebaseConfig';
+import { Link } from 'react-router-dom';
 
-import Button from '../../UI/Button/Button';
-import FormInput from '../../UI/FormInput/FormInput';
-import Error from '../../Error/Error';
+import Button from '../UI/Button/Button';
+import Form from '../Form/Form';
+import FormInput from '../Form/FormInput/FormInput';
+import Error from '../Error/Error';
 
 const SignInForm = ({ className }) => {
   const [login, setLogin] = useState('');
@@ -16,13 +18,13 @@ const SignInForm = ({ className }) => {
     const emailLogin = login + '@example.com';
 
     auth.signInWithEmailAndPassword(emailLogin, password).catch((error) => {
-      setError('Error signing in!');
+      setError(error.message);
       console.error('Error signing in', error);
     });
   };
 
   return (
-    <form
+    <Form
       className={'form ' + className}
       onSubmit={(e) => signInHandler(e, login, password)}
     >
@@ -43,10 +45,13 @@ const SignInForm = ({ className }) => {
         name='password'
       />
       {error && <Error text={error} className='form__error' />}
+      <Link to='/sign-up' className='form__link'>
+        Don't have an account? Sign up.
+      </Link>
       <Button submit className='form__button'>
         Sign In
       </Button>
-    </form>
+    </Form>
   );
 };
 

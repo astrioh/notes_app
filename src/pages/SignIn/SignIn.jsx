@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SignInForm from '../../components/Forms/SignInForm/SignInForm';
+import SignInForm from '../../components/Forms/SignInForm';
 import CenterCard from '../../components/UI/CenterCard/CenterCard';
 import './SignIn.scss';
 
