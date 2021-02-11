@@ -1,30 +1,38 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
+import { firebaseAuth } from '../../providers/AuthProvider';
 import Button from '../UI/Button/Button';
 import Form from '../Form/Form';
 import FormInput from '../Form/FormInput/FormInput';
 import Error from '../Error/Error';
-import { firebaseAuth } from '../../providers/AuthProvider';
 
-const SignInForm = ({ className, history }) => {
-  const { handleSignin, inputs, setInputs, error } = useContext(firebaseAuth);
+const SignInForm = ({ history, className }) => {
+  const { handleSignup, inputs, setInputs, error } = useContext(firebaseAuth);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    handleSignup().then(
+      () => history.push('/'),
+      (err) => console.error(err)
+    );
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleSignin().then(
-      () => history.push('/'),
-      (err) => console.error(err)
-    );
-  };
-
   return (
     <Form className={'form ' + className} onSubmit={handleSubmit}>
+      <FormInput
+        className='form__input'
+        type='text'
+        label='Display Name'
+        value={inputs.displayName}
+        onChange={handleChange}
+        name='displayName'
+      />
       <FormInput
         className='form__input'
         type='text'
@@ -42,11 +50,11 @@ const SignInForm = ({ className, history }) => {
         name='password'
       />
       {error && <Error text={error} className='form__error' />}
-      <Link to='/sign-up' className='form__link'>
-        Don't have an account? Sign up.
+      <Link to='/sign-in' className='form__link'>
+        Already have an account? Sign in.
       </Link>
       <Button submit className='form__button'>
-        Sign In
+        Sign Up
       </Button>
     </Form>
   );
