@@ -4,13 +4,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { firebaseAuth } from '../../providers/AuthProvider';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { token } = useContext(firebaseAuth);
+  const { authUser } = useContext(firebaseAuth);
 
   return (
     <Route
       {...rest}
       render={(props) => {
-        return token ? (
+        return authUser ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { firebaseAuth } from '../../providers/AuthProvider';
 import Button from '../UI/Button/Button';
@@ -8,19 +8,32 @@ import FormInput from '../Form/FormInput/FormInput';
 import Error from '../Error/Error';
 
 const SignInForm = ({ history, className }) => {
-  const { handleSignup, inputs, setInputs, error } = useContext(firebaseAuth);
+  const { handleSignup } = useContext(firebaseAuth);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    handleSignup().then(
-      () => history.push('/'),
-      (err) => console.error(err)
-    );
-  };
+  const [inputs, setInputs] = useState({
+    login: '',
+    password: '',
+    displayName: '',
+  });
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    handleSignup(inputs.login, inputs.password, inputs.displayName).then(
+      () => history.push('/'),
+      (err) => {
+        setError(err.message);
+        setLoading(false);
+      }
+    );
   };
 
   return (
@@ -53,8 +66,8 @@ const SignInForm = ({ history, className }) => {
       <Link to='/sign-in' className='form__link'>
         Already have an account? Sign in.
       </Link>
-      <Button submit className='form__button'>
-        Sign Up
+      <Button submit className='form__button' disabled={loading}>
+        {loading ? 'Loading...' : 'Sign Up'}
       </Button>
     </Form>
   );

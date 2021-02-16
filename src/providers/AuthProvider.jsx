@@ -1,36 +1,29 @@
 import React, { useState } from 'react';
 import { authMethods } from '../firebase/authMethods';
+import { auth } from '../firebase/firebaseConfig';
 
 export const firebaseAuth = React.createContext();
 
 const AuthProvider = (props) => {
-  const [inputs, setInputs] = useState({
-    login: '',
-    password: '',
-    displayName: '',
-  });
-  const [error, setError] = useState();
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [authUser, setAuthUser] = useState(null);
 
-  const handleSignup = () => {
-    const loginEmail = inputs.login + '@abc.com';
-    return authMethods.signup(
-      loginEmail,
-      inputs.password,
-      inputs.displayName,
-      setError,
-      setToken
-    );
+  const handleSignup = (login, password, displayName) => {
+    const loginEmail = login + '@abc.com';
+    return authMethods.signup(loginEmail, password, displayName);
   };
 
-  const handleSignin = () => {
-    const loginEmail = inputs.login + '@abc.com';
-    return authMethods.signin(loginEmail, inputs.password, setError, setToken);
+  const handleSignin = (login, password) => {
+    const loginEmail = login + '@abc.com';
+    return authMethods.signin(loginEmail, password);
   };
 
   const handleSignout = () => {
-    authMethods.signout(setError, setToken);
+    authMethods.signout();
   };
+
+  auth.onAuthStateChanged((authUser) => {
+    authUser ? setAuthUser(authUser) : setAuthUser(null);
+  });
 
   return (
     <firebaseAuth.Provider
@@ -38,10 +31,7 @@ const AuthProvider = (props) => {
         handleSignup,
         handleSignin,
         handleSignout,
-        setInputs,
-        token,
-        inputs,
-        error,
+        authUser,
       }}
     >
       {props.children}
