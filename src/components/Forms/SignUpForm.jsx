@@ -8,7 +8,7 @@ import FormInput from '../Form/FormInput/FormInput';
 import Error from '../Error/Error';
 
 const SignInForm = ({ history, className }) => {
-  const { handleSignup } = useContext(firebaseAuth);
+  const { handleSignup, setAuthUser } = useContext(firebaseAuth);
 
   const [inputs, setInputs] = useState({
     login: '',
@@ -28,7 +28,11 @@ const SignInForm = ({ history, className }) => {
     setLoading(true);
 
     handleSignup(inputs.login, inputs.password, inputs.displayName).then(
-      () => history.push('/'),
+      (data) => {
+        console.log(data);
+        setAuthUser(data.user);
+        history.push('/');
+      },
       (err) => {
         setError(err.message);
         setLoading(false);

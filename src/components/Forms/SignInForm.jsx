@@ -8,7 +8,7 @@ import Error from '../Error/Error';
 import { firebaseAuth } from '../../providers/AuthProvider';
 
 const SignInForm = ({ className, history }) => {
-  const { handleSignin } = useContext(firebaseAuth);
+  const { handleSignin, setAuthUser } = useContext(firebaseAuth);
 
   const [inputs, setInputs] = useState({
     login: '',
@@ -27,7 +27,10 @@ const SignInForm = ({ className, history }) => {
     setLoading(true);
 
     handleSignin(inputs.login, inputs.password).then(
-      () => history.push('/'),
+      (data) => {
+        setAuthUser(data.user);
+        history.push('/');
+      },
       (err) => {
         setError(err.message);
         setLoading(false);
@@ -58,7 +61,7 @@ const SignInForm = ({ className, history }) => {
         Don't have an account? Sign up.
       </Link>
       <Button submit className='form__button' disabled={loading}>
-        {loading ? 'Loading...' : 'Sign Up'}
+        {loading ? 'Loading...' : 'Sign In'}
       </Button>
     </Form>
   );

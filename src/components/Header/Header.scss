@@ -1,0 +1,23 @@
+.header {
+  &__content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+  }
+}
+
+.signout {
+  display: flex;
+  align-items: center;
+
+  color: #777;
+  cursor: pointer;
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+
+    margin-left: 10px;
+  }
+}

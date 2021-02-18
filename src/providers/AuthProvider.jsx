@@ -21,9 +21,10 @@ const AuthProvider = (props) => {
     authMethods.signout();
   };
 
-  auth.onAuthStateChanged((authUser) => {
+  /* auth.onAuthStateChanged((authUser) => {
     authUser ? setAuthUser(authUser) : setAuthUser(null);
-  });
+    console.log(authUser);
+  }); */
 
   return (
     <firebaseAuth.Provider
@@ -32,6 +33,7 @@ const AuthProvider = (props) => {
         handleSignin,
         handleSignout,
         authUser,
+        setAuthUser,
       }}
     >
       {props.children}
