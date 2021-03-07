@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { authMethods } from '../firebase/authMethods';
-import { auth } from '../firebase/firebaseConfig';
 
 export const firebaseAuth = React.createContext();
 
@@ -18,13 +17,8 @@ const AuthProvider = (props) => {
   };
 
   const handleSignout = () => {
-    authMethods.signout();
+    return authMethods.signout();
   };
-
-  /* auth.onAuthStateChanged((authUser) => {
-    authUser ? setAuthUser(authUser) : setAuthUser(null);
-    console.log(authUser);
-  }); */
 
   return (
     <firebaseAuth.Provider
