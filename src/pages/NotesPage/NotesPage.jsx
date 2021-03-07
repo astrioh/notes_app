@@ -7,10 +7,6 @@ const NotesPage = () => {
   return (
     <>
       <Header />
-      <Container>
-        {console.log('Notes Page')}
-        <h1>Notes Page</h1>
-      </Container>
     </>
   );
 };

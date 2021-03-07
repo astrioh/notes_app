@@ -6,7 +6,7 @@ import Container from '../Container/Container';
 
 import './Header.scss';
 import logoutIcon from '../../assets/icons/logout.svg';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Header = () => {
   const { authUser, handleSignout } = useContext(firebaseAuth);
@@ -22,8 +22,7 @@ const Header = () => {
   }, [authUser]);
 
   const signOutClickHandler = () => {
-    handleSignout();
-    setSignout(true);
+    handleSignout().then(() => setSignout(true));
   };
 
   if (signout) {
@@ -32,17 +31,14 @@ const Header = () => {
 
   return (
     <header className='header'>
-      <Container>
-        <div className='header__content'>
-          <div
-            onClick={signOutClickHandler}
-            className='signout header__signout'
-          >
-            {username}
-            <img src={logoutIcon} className='signout__icon' alt='Logout' />
-          </div>
-        </div>
-      </Container>
+      <Link to='/'>
+        <div className='logo'>Notes</div>
+      </Link>
+
+      <div onClick={signOutClickHandler} className='signout header__signout'>
+        {username}
+        <img src={logoutIcon} className='signout__icon' alt='Logout' />
+      </div>
     </header>
   );
 };

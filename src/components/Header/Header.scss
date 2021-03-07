@@ -1,17 +1,28 @@
 .header {
-  &__content {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 50px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 50px;
+  padding: 0 40px;
+
+  background-color: #3059ac;
+}
+
+.logo {
+  padding: 10px;
+
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
 }
 
 .signout {
   display: flex;
   align-items: center;
 
-  color: #777;
+  color: #fff;
   cursor: pointer;
 
   &__icon {
